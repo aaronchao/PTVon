@@ -18,7 +18,9 @@ A hyper-glanceable, modern Android app for live public-transport departures acro
 
 ## Download
 
-Grab the latest APK from the [**Releases**](../../releases) page and sideload it (enable "install from unknown sources"). It runs in demo mode out of the box; add your own free PTV credentials for live data (see below).
+Grab the latest APK from the [**Releases**](../../releases) page and sideload it (enable "install from unknown sources"). The prebuilt APK is **live out of the box** — it ships with the maintainer's PTV credentials, so you get real departures with zero setup.
+
+> Building from source instead? The repo intentionally omits those credentials, so a source build runs in **demo mode** (sample departures; weather is always live) until you add your own free PTV key — see [Getting started](#getting-started). For a public deployment, route requests through the [Cloudflare Worker proxy](proxy/) so no key is embedded in the app.
 
 ## Features
 
@@ -58,9 +60,22 @@ Grab the latest APK from the [**Releases**](../../releases) page and sideload it
    ./gradlew :app:installDebug
    ```
 
+### Optional: backend proxy (recommended for public releases)
+
+To keep your key out of the APK entirely, deploy the [Cloudflare Worker proxy](proxy/) and set
+`ptv.proxyUrl` in `local.properties`. The app then routes all PTV calls through the Worker (which
+holds the key as a secret) and ships **no** credentials — see [`proxy/README.md`](proxy/README.md).
+
 ## PTV API authentication
 
 The PTV API requires every request to carry a `devid` and an HMAC-SHA1 `signature`. The signature is computed over the request **path + query** (not the host), with `devid` appended *before* signing. This is handled automatically by an OkHttp interceptor (`PtvAuthInterceptor`).
+
+## Attribution
+
+- Timetable data © Public Transport Victoria, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Weather data by [Open-Meteo](https://open-meteo.com/), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+PTVon is an independent app and is not affiliated with or endorsed by Public Transport Victoria.
 
 ## License
 

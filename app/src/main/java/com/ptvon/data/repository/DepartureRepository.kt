@@ -1,8 +1,8 @@
 package com.ptvon.data.repository
 
-import com.ptvon.BuildConfig
 import com.ptvon.core.time.TimeSource
 import com.ptvon.data.remote.PtvApi
+import com.ptvon.data.remote.PtvMode
 import com.ptvon.domain.DepartureMapper
 import com.ptvon.domain.model.Departure
 import com.ptvon.domain.model.Disruption
@@ -29,7 +29,7 @@ class DepartureRepository @Inject constructor(
     private val timeSource: TimeSource,
 ) {
     val isDemoMode: Boolean
-        get() = BuildConfig.PTV_DEV_ID.isBlank() || BuildConfig.PTV_API_KEY.isBlank()
+        get() = PtvMode.isDemo
 
     suspend fun loadBoards(pins: List<PinnedStop>): List<StationBoard> {
         val source = if (pins.isEmpty() && isDemoMode) DEMO_PINS else pins

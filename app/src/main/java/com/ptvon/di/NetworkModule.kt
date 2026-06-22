@@ -30,8 +30,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val PTV_BASE_URL = "https://timetableapi.ptv.vic.gov.au/"
+    private const val PTV_DIRECT_URL = "https://timetableapi.ptv.vic.gov.au/"
     private const val WEATHER_BASE_URL = "https://api.open-meteo.com/"
+
+    /** Proxy base URL if configured, else PTV directly. Always ends in '/'. */
+    private fun ptvBaseUrl(): String {
+        val proxy = BuildConfig.PTV_PROXY_URL
+        return if (proxy.isNotBlank()) proxy.trimEnd('/') + "/" else PTV_DIRECT_URL
+    }
 
     /** Developer id, injected from BuildConfig (sourced from local.properties / CI secrets). */
     @Provides
@@ -103,7 +109,7 @@ object NetworkModule {
     fun providePtvApi(
         @Named("ptvClient") client: OkHttpClient,
         json: Json,
-    ): PtvApi = retrofit(PTV_BASE_URL, client, json).create(PtvApi::class.java)
+    ): PtvApi = retrofit(ptvBaseUrl(), client, json).create(PtvApi::class.java)
 
     @Provides
     @Singleton

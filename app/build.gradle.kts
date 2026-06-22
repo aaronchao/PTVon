@@ -28,6 +28,9 @@ android {
 
         buildConfigField("String", "PTV_DEV_ID", "\"${localProps.getProperty("ptv.devId", "")}\"")
         buildConfigField("String", "PTV_API_KEY", "\"${localProps.getProperty("ptv.apiKey", "")}\"")
+        // Optional backend proxy (Cloudflare Worker). When set, the app calls the proxy
+        // instead of PTV directly and ships NO key. Leave blank to use direct mode.
+        buildConfigField("String", "PTV_PROXY_URL", "\"${localProps.getProperty("ptv.proxyUrl", "")}\"")
     }
 
     buildTypes {

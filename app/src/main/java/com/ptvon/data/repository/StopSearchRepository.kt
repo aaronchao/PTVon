@@ -1,7 +1,7 @@
 package com.ptvon.data.repository
 
-import com.ptvon.BuildConfig
 import com.ptvon.data.remote.PtvApi
+import com.ptvon.data.remote.PtvMode
 import com.ptvon.domain.model.PinnedStop
 import com.ptvon.domain.model.RouteType
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ class StopSearchRepository @Inject constructor(
     private val api: PtvApi,
 ) {
     private val isDemoMode: Boolean
-        get() = BuildConfig.PTV_DEV_ID.isBlank() || BuildConfig.PTV_API_KEY.isBlank()
+        get() = PtvMode.isDemo
 
     /** Search trains/trams/buses for [term]. Returns pinnable stops. */
     suspend fun search(term: String): List<PinnedStop> {
