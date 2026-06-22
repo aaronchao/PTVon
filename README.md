@@ -4,6 +4,22 @@ A hyper-glanceable, modern Android app for live public-transport departures acro
 
 > Built with Jetpack Compose. Powered by the [PTV Timetable API v3](https://timetableapi.ptv.vic.gov.au/swagger/ui/index) and [Open-Meteo](https://open-meteo.com/).
 
+## Screenshots
+
+<p align="left">
+  <img src="docs/screenshots/demo.gif" width="250" alt="PTVon live demo — Melbourne Central, Richmond & Flinders Street" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/dashboard.png" width="250" alt="Dashboard with live departures" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/tracking.png" width="250" alt="Tracking a stop for alerts" />
+</p>
+
+<sub>Live departures for Melbourne Central, Richmond and Flinders Street, with an animated weather badge + 6-hour forecast. The tracked stop (blue outline) receives 10/5/1-minute alerts.</sub>
+
+## Download
+
+Grab the latest APK from the [**Releases**](../../releases) page and sideload it (enable "install from unknown sources"). It runs in demo mode out of the box; add your own free PTV credentials for live data (see below).
+
 ## Features
 
 - **Pin up to 4 stops** — search and save the stops you use most; they load instantly on every launch.
