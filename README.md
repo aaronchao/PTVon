@@ -1,0 +1,51 @@
+# PTVon
+
+A hyper-glanceable, modern Android app for live public-transport departures across Victoria, Australia (trains, trams, buses). Pin the stops you use, see live countdowns at a glance, track one stop for departure alerts, and get real-feel weather advice on what to wear — all in a warm, friendly UI.
+
+> Built with Jetpack Compose. Powered by the [PTV Timetable API v3](https://timetableapi.ptv.vic.gov.au/swagger/ui/index) and [Open-Meteo](https://open-meteo.com/).
+
+## Features
+
+- **Pin up to 4 stops** — search and save the stops you use most; they load instantly on every launch.
+- **Live countdowns** — real-time "minutes to arrival" from the PTV API (`estimated` with `scheduled` fallback).
+- **Track one stop** — tap the bell (or double-tap a card) to make it the single "current stop"; get **10 / 5 / 1-minute** exact alarms plus an ongoing lock-screen live countdown.
+- **Service disruptions** — delays and alerts shown inline per stop.
+- **Weather** — live real-feel advice ("a jacket today") with an animated weather badge and a 6-hour forecast strip.
+- **Day / night theme** and a friendly, rounded design.
+
+## Tech stack
+
+- **Language:** Kotlin
+- **UI:** Jetpack Compose + Material 3
+- **Architecture:** MVVM + Clean Architecture, UDF, Kotlin Coroutines / Flow
+- **DI:** Hilt
+- **Networking:** Retrofit + OkHttp + Kotlinx Serialization
+- **Storage:** DataStore (Preferences)
+- **Background:** WorkManager / AlarmManager (exact alerts) + a foreground service (live lock-screen banner)
+
+## Getting started
+
+1. Clone the repo and open it in Android Studio (or build from the CLI).
+2. Get free PTV Timetable API credentials — request a **devid** (User ID) and **API key** from PTV: <https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/>
+3. Create `local.properties` in the project root (it is gitignored) with your SDK path and credentials:
+
+   ```properties
+   sdk.dir=/path/to/Android/sdk
+   ptv.devId=YOUR_DEVID
+   ptv.apiKey=YOUR_API_KEY
+   ```
+
+   Leave the two `ptv.*` values blank to run in **demo mode** with sample departures (weather is always live and keyless).
+4. Build & install:
+
+   ```bash
+   ./gradlew :app:installDebug
+   ```
+
+## PTV API authentication
+
+The PTV API requires every request to carry a `devid` and an HMAC-SHA1 `signature`. The signature is computed over the request **path + query** (not the host), with `devid` appended *before* signing. This is handled automatically by an OkHttp interceptor (`PtvAuthInterceptor`).
+
+## License
+
+MIT — see [LICENSE](LICENSE).

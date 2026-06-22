@@ -1,0 +1,30 @@
+# Android / Gradle
+*.iml
+.gradle/
+/build/
+/app/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+build/
+
+# Secrets & local config — never commit (PTV API key + devid live here)
+local.properties
+
+# IDE
+.idea/
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keystores / signing
+*.jks
+*.keystore
+
+# Logs / misc
+*.log
+/tmp/
