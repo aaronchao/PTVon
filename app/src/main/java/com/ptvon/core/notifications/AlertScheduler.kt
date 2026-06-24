@@ -23,7 +23,7 @@ class AlertScheduler @Inject constructor(
 ) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
-    private val leadMinutes = listOf(10, 5, 1)
+    private val leadMinutes = listOf(10, 5, 3)
 
     /** Cancel any existing alerts and schedule fresh ones for [board]'s next departure. */
     fun scheduleFor(board: StationBoard) {

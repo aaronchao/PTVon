@@ -14,7 +14,18 @@ data class Departure(
     val platform: String?,
     val departureEpochMillis: Long,
     val isLive: Boolean,
+    val routeId: Int = 0,         // for "next same service" matching
+    val directionId: Int = 0,
+    val flags: String = "",
 ) {
+    /** Best-effort express detection from PTV flags + destination (the feed marks this sparsely). */
+    val isExpress: Boolean
+        get() {
+            val f = flags.uppercase()
+            return f.contains("EXP") || f.contains("LTD") ||
+                destination.contains("express", ignoreCase = true)
+        }
+
     /**
      * Minutes until departure given the authoritative [nowMillis] (from TimeSource).
      * Returns 0 for "due now" and never goes negative.

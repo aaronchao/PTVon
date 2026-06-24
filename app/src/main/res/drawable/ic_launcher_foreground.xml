@@ -4,26 +4,34 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Melbourne tram, centred in the adaptive-icon safe zone. -->
+    <!-- White Melbourne tram, centred in the adaptive-icon safe zone. -->
     <path
-        android:strokeColor="#9DACCB"
-        android:strokeWidth="3"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
-        android:pathData="M54,28.5 L54,35.25" />
+        android:pathData="M54,30 L54,38" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M54,29 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M37,38 h34 a10,10 0 0 1 10,10 v16 a10,10 0 0 1 -10,10 h-34 a10,10 0 0 1 -10,-10 v-16 a10,10 0 0 1 10,-10 z" />
+    <path android:fillColor="#23488F"
+        android:pathData="M43,46 h22 a5,5 0 0 1 5,5 v2 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 v-2 a5,5 0 0 1 5,-5 z" />
     <path
-        android:fillColor="#3F7BFF"
-        android:pathData="M42.75,35.25 h22.5 a11.25,11.25 0 0 1 11.25,11.25 v16.25 a11.25,11.25 0 0 1 -11.25,11.25 h-22.5 a11.25,11.25 0 0 1 -11.25,-11.25 v-16.25 a11.25,11.25 0 0 1 11.25,-11.25 z" />
-    <path
-        android:fillColor="#CFE0FF"
-        android:pathData="M42.75,41 h22.5 a5,5 0 0 1 5,5 v2.5 a5,5 0 0 1 -5,5 h-22.5 a5,5 0 0 1 -5,-5 v-2.5 a5,5 0 0 1 5,-5 z" />
-    <path
-        android:fillColor="#FFC65A"
-        android:pathData="M31.5,57 h45 v4.5 h-45 z" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M42.75,67.25 m-2.75,0 a2.75,2.75 0 1 0 5.5,0 a2.75,2.75 0 1 0 -5.5,0" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M65.25,67.25 m-2.75,0 a2.75,2.75 0 1 0 5.5,0 a2.75,2.75 0 1 0 -5.5,0" />
+        android:strokeColor="#CFE0FF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:pathData="M54,46 L54,58" />
+    <path android:fillColor="#23488F"
+        android:pathData="M40,66 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
+    <path android:fillColor="#23488F"
+        android:pathData="M68,66 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M44,77 m-5,0 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M64,77 m-5,0 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0" />
+    <path android:fillColor="#23488F"
+        android:pathData="M44,77 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
+    <path android:fillColor="#23488F"
+        android:pathData="M64,77 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
 </vector>

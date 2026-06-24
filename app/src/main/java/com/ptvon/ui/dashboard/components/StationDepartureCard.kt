@@ -48,6 +48,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -162,18 +166,24 @@ private fun DepartureRow(departure: Departure, nowMillis: Long) {
     )
     val numberAlpha = if (imminent) pulseAlpha else 1f
 
+    Box(modifier = Modifier.fillMaxWidth()) {
+    if (departure.isExpress) {
+        ExpressShimmer(Color(departure.routeType.brandColor), Modifier.matchParentSize())
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 18.dp, vertical = 7.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        // Fixed width so destinations + live dots line up across every row.
         Box(
             modifier = Modifier
-                .widthIn(min = 58.dp, max = 120.dp)
+                .width(84.dp)
+                .height(30.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color(departure.routeType.brandColor))
-                .padding(horizontal = 12.dp, vertical = 7.dp),
+                .padding(horizontal = 8.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -189,13 +199,20 @@ private fun DepartureRow(departure: Departure, nowMillis: Long) {
         Spacer(Modifier.width(14.dp))
 
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = departure.destination,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = departure.destination,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false),
+                )
+                if (departure.isExpress) {
+                    Spacer(Modifier.width(6.dp))
+                    ExpressTag(Color(departure.routeType.brandColor))
+                }
+            }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (departure.isLive) {
                     LiveDot()
@@ -240,6 +257,7 @@ private fun DepartureRow(departure: Departure, nowMillis: Long) {
                 }
             }
         }
+    }
     }
 }
 
@@ -309,6 +327,69 @@ private fun DisruptionStrip(disruptions: List<Disruption>) {
 private fun summary(disruptions: List<Disruption>): String = when (disruptions.size) {
     1 -> disruptions.first().title
     else -> "${disruptions.size} service alerts — ${disruptions.first().title}"
+}
+
+/** Animated "Express ›››" tag — sliding chevrons make the service feel fast. */
+@Composable
+private fun ExpressTag(color: Color) {
+    val t = rememberInfiniteTransition(label = "exptag")
+    val phase by t.animateFloat(
+        initialValue = 0f,
+        targetValue = 3f,
+        animationSpec = infiniteRepeatable(tween(900, easing = LinearEasing), RepeatMode.Restart),
+        label = "phase",
+    )
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(50))
+            .background(color.copy(alpha = 0.16f))
+            .padding(horizontal = 6.dp, vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text("Express", color = color, fontWeight = FontWeight.Bold, fontSize = 10.sp)
+        Spacer(Modifier.width(3.dp))
+        Row {
+            repeat(3) { i ->
+                val a = if (phase.toInt() % 3 == i) 1f else 0.3f
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = color.copy(alpha = a),
+                    modifier = Modifier
+                        .size(11.dp)
+                        .offset(x = (-4 * i).dp),
+                )
+            }
+        }
+    }
+}
+
+/** A bright band that sweeps across an express row. */
+@Composable
+private fun ExpressShimmer(color: Color, modifier: Modifier = Modifier) {
+    val t = rememberInfiniteTransition(label = "expshim")
+    val x by t.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1700, easing = LinearEasing), RepeatMode.Restart),
+        label = "x",
+    )
+    Box(
+        modifier.drawBehind {
+            val w = size.width
+            val band = w * 0.5f
+            val startX = -band + x * (w + band)
+            drawRect(
+                brush = Brush.horizontalGradient(
+                    0f to Color.Transparent,
+                    0.5f to color.copy(alpha = 0.18f),
+                    1f to Color.Transparent,
+                    startX = startX,
+                    endX = startX + band,
+                ),
+            )
+        },
+    )
 }
 
 @Composable

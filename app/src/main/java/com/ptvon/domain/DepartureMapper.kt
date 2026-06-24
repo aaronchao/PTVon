@@ -42,6 +42,9 @@ class DepartureMapper @Inject constructor() {
                 platform = dto.platformNumber,
                 departureEpochMillis = epochMillis,
                 isLive = dto.estimatedDepartureUtc != null,
+                routeId = dto.routeId,
+                directionId = dto.directionId,
+                flags = dto.flags.orEmpty(),
             )
         }.sortedBy { it.departureEpochMillis }
 

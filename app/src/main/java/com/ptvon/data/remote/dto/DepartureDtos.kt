@@ -27,6 +27,7 @@ data class DepartureDto(
     @SerialName("estimated_departure_utc") val estimatedDepartureUtc: String? = null,
     @SerialName("at_platform") val atPlatform: Boolean = false,
     @SerialName("platform_number") val platformNumber: String? = null,
+    @SerialName("flags") val flags: String? = null,
 )
 
 @Serializable
